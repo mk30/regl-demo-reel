@@ -2,8 +2,8 @@ const regl = require('regl')()
 const mat4 = require('gl-mat4')
 var rmat = []
 
-const cream = require('./implicitcream.js')
-const cone = require('./implicitcone.js')
+const cream = require('./libraries/implicitcream.js')
+const cone = require('./libraries/implicitcone.js')
 const normals = require('angle-normals')
 
 module.exports = function (regl) {

@@ -2,7 +2,7 @@ const regl = require('regl')()
 const mat4 = require('gl-mat4')
 var rmat = []
 
-const fourxfour = require('./shani4x4module.js')
+const fourxfour = require('./libraries/shani4x4module.js')
 const normals = require('angle-normals')
 
 const camera = require('./libraries/camera.js')(regl, {
