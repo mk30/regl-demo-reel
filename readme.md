@@ -8,7 +8,7 @@ on sept. 3, 2016 in philadelphia.
 ###demos with source code
 
 
-[full demo reel](kitties.neocities.org/shani.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shani.js))
+[full demo reel](http://kitties.neocities.org/shani.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shani.js))
 
 individual demos (in order):
 
@@ -20,7 +20,7 @@ individual demos (in order):
 6. [rotatypoints.js](http://kitties.neocities.org/rotatypoints.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanirotatypoints.js))
 7. [icecream.js] (http://kitties.neocities.org/icecream.html) ([source code)](https://github.com/mk30/regl-demo-reel/blob/master/shaniicecream.js))
 8. [text2.js](http://kitties.neocities.org/text2.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanitext2.js))
-9. [4x4.js](kitties.neocities.org/4x4.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shani4x4.js))
+9. [4x4.js](http://kitties.neocities.org/4x4.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shani4x4.js))
 
 
 all demos were created with [regl](http://regl.party).
