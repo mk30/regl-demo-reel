@@ -14,7 +14,7 @@ individual demos (in order):
 
 1. [swimmypuff.js](http://kitties.neocities.org/swimmypuff.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shaniswimmypuff.js))
 2.  [cactus.js](http://kitties.neocities.org/cactus.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanicactus.js)) 
-3. [text 1](http://kitties.neocities.org/text1.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanitext.js))
+3. [text1.js](http://kitties.neocities.org/text1.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanitext.js))
 4. [skellyscissor.js](http://kitties.neocities.org/skellyscissor.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shaniskellyscissor.js))
 5. [cyl.js](http://kitties.neocities.org/democyl.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanicyl.js))
 6. [rotatypoints.js](http://kitties.neocities.org/rotatypoints.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanirotatypoints.js))
