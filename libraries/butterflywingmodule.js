@@ -60,7 +60,7 @@ module.exports = function (regl){
         //mat4.scale(rmat, mat4.identity(rmat),
           //[ 0.25, 0.25, 0.25])
         mat4.translate(rmat, mat4.identity(rmat),
-          [0,Math.sin(context.time)+2.0,context.time*0.4-10.0])
+          [0,Math.sin(context.time)+2.0,2.0*Math.sin(context.time/5.0)*(context.time*0.4-5.0)])
         return rmat 
       },
       projection: function (context){
