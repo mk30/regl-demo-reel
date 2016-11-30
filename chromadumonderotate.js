@@ -5,7 +5,7 @@ const dis = require('./libraries/chromadisplace.js')
 const normals = require('angle-normals')
 const camera = require('./libraries/camera')(regl, {
   center: [0, 0, 0],
-  distance: 5,
+  distance: 7,
   theta: 0.8
 
 })
@@ -27,8 +27,8 @@ const drawdis = regl({
     uniform float t;
     void main () {
       //gl_FragColor = vec4(abs(vnorm), 0.4);
-      gl_FragColor = vec4(abs(vnorm) + 
-      vec3(snoise(vnorm + sin(t))), 1.0);
+      gl_FragColor = vec4(- abs(vnorm) + 
+      vec3(2.0*snoise(vnorm + sin(t))), 1.0);
     }`,
   vert: glsl`
     precision mediump float;
@@ -55,7 +55,7 @@ const drawdis = regl({
       vpos = position;
       dvpos = position + vec3(dx,0,dz);
       gl_Position = projection * view * model * vec4(warp(dvpos),1);
-      gl_PointSize = (10.0*(1.0+sin(t*20.0+length(position))))/gl_Position.w;
+      gl_PointSize = (10.0*(1.0+3.0*sin(t*20.0+length(position))))/gl_Position.w;
 
     }`,
   attributes: {
