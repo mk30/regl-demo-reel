@@ -28,6 +28,7 @@
     "regl": "^1.1.1",
     "regl-feedback": "^1.0.0",
     "resl": "^1.0.3",
+    "sphere-mesh": "^0.2.2",
     "vectorize-text": "^3.0.2"
   }
 }
