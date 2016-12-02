@@ -6,7 +6,7 @@ const normals = require('angle-normals')
 
 const camera = require('./libraries/camera.js')(regl, {
   center: [0, 0, 0],
-  distance: 3,
+  distance: 10,
   theta: 1
 })
 var suits = { single: [], many: [] }
@@ -84,7 +84,7 @@ function unicorn (regl){
       },
       offset: function (context, props) {
         vec3.copy(vtmp, props.vector)
-        vec3.scale(vtmp, vtmp, props.speed*context.time*10.0)
+        vec3.scale(vtmp, vtmp, props.speed*context.time*4.0)
         vec3.add(vtmp, props.init, vtmp)
         return vtmp
       },
