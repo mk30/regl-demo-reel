@@ -11,7 +11,6 @@ var drawfeedback = feedback(regl, `
   }
 `)
 const feedBackTexture = regl.texture({})
-
 const textMesh = vectorizeText('thank you pauline oliveros', {
   triangles: true,
   width: 4,
@@ -34,7 +33,7 @@ function text (regl){
       precision mediump float;
       uniform float t;
       void main () {
-        gl_FragColor = vec4(sin(t*5.0), 0.6, 0.7, 0.8);
+        gl_FragColor = vec4(1.0, 0.5*sin(t)+0.3, 0, 0.4);
       }`,
     vert: `
       precision mediump float;
@@ -43,6 +42,7 @@ function text (regl){
       uniform float t;
       void main () {
         gl_Position = projection * view * model * vec4(position.x, -position.y, 0, 1.0);
+
       }`,
     attributes: {
       position: mesh.positions
@@ -56,6 +56,8 @@ function text (regl){
         var theta = context.tick/60
         mat4.translate(rmat, mat4.identity(rmat), [1,0,0])
         mat4.rotateY(rmat, rmat, Math.PI/2)
+        mat4.translate(rmat, rmat,
+          [0,Math.sin(context.time)*0.1,Math.sin(context.time*0.1)*0.1])
         return rmat
       }
     },
@@ -98,6 +100,7 @@ function sphere (regl) {
       },
       time: regl.context('time')
     },
+    primitive: 'points',
     elements: mesh.cells
   })
 }
@@ -112,6 +115,5 @@ regl.frame(function () {
       min: 'linear',
       mag: 'linear'
     })
-
   })
 })
