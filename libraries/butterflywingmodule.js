@@ -13,12 +13,18 @@ module.exports = function (regl){
     frag: `
       precision mediump float;
       varying vec3 vnormal;
+      uniform float t;
       vec3 hsl2rgb(vec3 hsl) {
         vec3 rgb = clamp( abs(mod(hsl.x*5.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
         return hsl.z - hsl.y * (rgb-0.5)*(3.0-abs(2.0*hsl.y-1.0));
       }
       void main () {
-        gl_FragColor = vec4(hsl2rgb(abs(vnormal)), 1.0);
+        vec3 hsl = vec3(
+          vnormal.x/10.0,
+          sin(t),
+          vnormal.z/cos(t)
+        );
+        gl_FragColor = vec4(hsl2rgb(hsl), 1.0);
       }`,
     vert: `
       precision mediump float;
@@ -40,7 +46,7 @@ module.exports = function (regl){
         vnormal = normal;
         gl_Position = projection * view * model * vec4(warp(position), 1.0);
         gl_PointSize =
-        (20.0*(5.0+sin(t*20.0+length(position))))/gl_Position.w;
+        (20.0*(3.0+sin(t*20.0+length(position))))/gl_Position.w;
       }`,
     attributes: {
       position: cyl.positions,
@@ -54,13 +60,14 @@ module.exports = function (regl){
       model: function(context, props){
         mat4.identity(rmat)
         var theta = -context.tick/60
-        //return mat4.rotateY(rmat, mat4.identity(rmat), theta)
+        mat4.rotateZ(rmat, rmat, theta/4)
         //return mat4.scale(rmat, mat4.identity(rmat),
         //[Math.sin(10.0*context.time), Math.sin(theta), 3.0])
         //mat4.scale(rmat, mat4.identity(rmat),
           //[ 0.25, 0.25, 0.25])
-        mat4.translate(rmat, mat4.identity(rmat),
-          [0,Math.sin(context.time)+2.0,2.0*Math.sin(context.time/5.0)*(context.time*0.4-5.0)])
+        mat4.translate(rmat, rmat,
+          //[0,Math.sin(context.time)+2.0,2.0*Math.sin(context.time/5.0)*(context.time*0.4-5.0)])
+          [0,Math.sin(context.time)+2.0,2.0*Math.sin(context.time/5.0)])
         return rmat 
       },
       projection: function (context){
@@ -71,7 +78,7 @@ module.exports = function (regl){
         )
       }
     },
-    primitive: "points"
+    primitive: "triangles"
   })
   return function(){
     drawcyl()
