@@ -1,93 +1,59 @@
-const regl = require('../regl')()
+const regl = require('regl')()
 const vectorizeText = require('vectorize-text')
-const perspective = require('gl-mat4/perspective')
-const lookAt = require('gl-mat4/lookAt')
+const mat4 = require('gl-mat4')
+const glsl = require('glslify')
 const textMesh = vectorizeText('thank you pauline oliveros', {
+  triangles: true,
+  width: 5,
   textAlign: 'center',
   textBaseline: 'middle'
 })
-const feedBackTexture = regl.texture({
-  copy: true,
-  min: 'linear',
-  mag: 'linear'
+const camera = require('./libraries/camera.js')(regl, {
+  center: [0, 3, 0],
+  distance: 6 
 })
-const drawFeedback = regl({
-  frag: `
-  precision mediump float;
-  uniform sampler2D texture;
-  uniform float t;
-  varying vec2 uv;
-  void main () {
-    vec2 warp = uv + 0.01 * sin(t) * vec2(0.5 - uv.y, uv.x - 0.5)
-      - 0.01 * (uv - 0.5);
-    gl_FragColor = vec4(0.98 * texture2D(texture, warp).rgb, 1);
-  }`,
-  vert: `
-  precision mediump float;
-  attribute vec2 position;
-  varying vec2 uv;
-  void main () {
-    uv = position;
-    gl_Position = vec4(2.0 * position - 1.0, 0, 1);
-  }`,
-  attributes: {
-    position: [-2, 0, 0, -2, 2, 2]
-  },
-  uniforms: {
-    texture: feedBackTexture,
-    t: ({tick}) => 0.001 * tick
-  },
-  depth: {enable: false},
-  count: 3
-})
-const drawText = regl({
-  frag: `
-  precision mediump float;
-  uniform float t;
-  void main () {
-    gl_FragColor = vec4(
-      1.0 + cos(2.0 * t),
-      1.0 + cos(2.1 * t + 1.0),
-      1.0 + cos(2.2 * t + 2.0),
-      1);
-  }`,
-  vert: `
-  attribute vec2 position;
-  uniform mat4 projection, view;
-  void main () {
-    gl_Position = projection * view * vec4(position, 0, 1);
-  }`,
-  attributes: {
-    position: textMesh.positions
-  },
-  elements: textMesh.edges,
-  uniforms: {
-    t: ({tick}) => 0.01 * tick,
-    view: ({tick}) => {
-      const t = 0.01 * tick
-      return lookAt([],
-        [8 * Math.sin(t), 0, -8 * Math.cos(t)],
-        [0, 0, 0],
-        [0, -1, 0])
+function text (regl){
+  var rmat = []
+  var mesh = textMesh
+  return regl({
+    frag: `
+      precision mediump float;
+      void main () {
+        gl_FragColor = vec4(0.2, 0.3, 0.7, 1.0);
+      }`,
+    vert: `
+      precision mediump float;
+      uniform mat4 model, projection, view;
+      attribute vec2 position;
+      uniform float t;
+      void main () {
+        gl_Position = projection * view * model *
+        vec4(position.x, -position.y, 0, 1.0);
+      }`,
+    attributes: {
+      position: mesh.positions
     },
-    projection: ({viewportWidth, viewportHeight}) =>
-      perspective([],
-        Math.PI / 4,
-        viewportWidth / viewportHeight,
-        0.01,
-        1000)
-  },
-  depth: {enable: false}
-})
+    elements: mesh.cells,
+    uniforms: {
+      t: function(context, props){
+           return context.tick/1000
+         },
+      model: function(context, props){
+        var theta = context.tick/60
+        return mat4.rotateY(rmat, mat4.identity(rmat), 1.2)
+      }
+    },
+    primitive: "triangles"
+  })
+}
+var draw = {
+  text: text(regl)
+}
 regl.frame(() => {
   regl.clear({
     color: [0, 0, 0, 1]
   })
-  drawFeedback()
-  drawText()
-  feedBackTexture({
-    copy: true,
-    min: 'linear',
-    mag: 'linear'
+  camera(() => {
+    draw.text()
   })
 })
