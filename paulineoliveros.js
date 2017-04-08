@@ -41,7 +41,8 @@ function text (regl){
       attribute vec2 position;
       uniform float t;
       void main () {
-        gl_Position = projection * view * model * vec4(position.x, -position.y, 0, 1.0);
+        gl_Position = projection * view * model *
+        vec4(position.y, -position.x, 0, 1.0);
 
       }`,
     attributes: {
