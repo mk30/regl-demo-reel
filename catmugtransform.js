@@ -19,7 +19,7 @@ function skeldraw (regl){
         return hsl.z+hsl.y*(rgb-0.5)*(1.0-abs(2.0*hsl.z-1.0));
       }
       void main () {
-        gl_FragColor = vec4(hsl2rgb(abs(vnormal)), 1.0);
+        gl_FragColor = vec4(hsl2rgb(abs(vnormal)*1.75), 1.0);
       }`,
     vert: `
       precision mediump float;
@@ -33,6 +33,7 @@ function skeldraw (regl){
         //return vec3 (r, r, sin(theta)) + 2.0*vnormal+cos(40.0*t+p.y);
         return vec3 (p.x, p.y, p.z) +
         sin(12.0*t+vnormal)*vnormal*pow(abs(sin(t)), 3.0);
+//        + sin(pow(t, 1.8))*abs(sin(t));
       }
       void main () {
         vnormal = normal;
@@ -52,7 +53,7 @@ function skeldraw (regl){
          },
       model: function(context, props){
         var theta = context.time
-        //return mat4.rotateZ(rmat, mat4.identity(rmat), theta/2.0)
+        //return mat4.rotateY(rmat, mat4.identity(rmat), theta/2.0)
         return mat4.identity(rmat)
       }
       
