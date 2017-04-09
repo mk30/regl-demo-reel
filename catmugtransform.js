@@ -32,7 +32,7 @@ function skeldraw (regl){
         float theta = atan(p.z, p.y);
         //return vec3 (r, r, sin(theta)) + 2.0*vnormal+cos(40.0*t+p.y);
         return vec3 (p.x, p.y, p.z) +
-        sin(12.0*t+vnormal)*vnormal*sin(t);
+        sin(12.0*t+vnormal)*vnormal*pow(abs(sin(t)), 3.0);
       }
       void main () {
         vnormal = normal;
