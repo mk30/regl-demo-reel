@@ -19,7 +19,6 @@ var drawfeedback = feedback(regl, `
 const feedBackTexture = regl.texture({})
 function makesphere (regl) {
   var sphere = require('./libraries/catmug.json')
-//  var sphere = icosphere(4)
   var model = []
   return regl({
     frag: glsl`
@@ -53,14 +52,14 @@ function makesphere (regl) {
         float h = min(
           pow(abs(((position.y/0.5)-1.0)*0.5),2.0), 0.3);
         float dx =
-        snoise(position+sin(0.2*time));
+        snoise(position+0.1*sin(time));
         float dz =
-        snoise(position+cos(0.1*time))*h;
+        snoise(position+0.1*cos(time));
         vpos = position;
         dvpos = position
           + vec3(dx,dz,0)
-          + vec3(0,position.y/12.0-sin(time*1.4)*0.007,position.z/12.0
-          + sin(time)*0.1);
+          + vec3(position.x,position.y/12.0-sin(time),position.z/12.0
+          + sin(time));
         gl_Position = projection * view * model * vec4(dvpos,1);
       }
     `,
