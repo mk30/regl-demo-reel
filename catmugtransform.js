@@ -6,7 +6,8 @@ const skelly = require('./libraries/catmug.json')
 const normals = require('angle-normals')
 
 const camera = require('./libraries/camera.js')(regl, {
-  center: [0, 0, 0]
+  center: [0, 0, 0],
+  distance: 4 
 })
 
 function skeldraw (regl){
