@@ -93,7 +93,7 @@ function unicorn (regl){
         mat4.identity(model)
         //mat4.scale(model, model, [0.01, 0.01, 0.015])
         mat4.rotate(model, model, props.rspeed *
-        context.time * 0.1, props.axis) 
+        context.time * 0.2, props.axis) 
         return model
       }
     },
