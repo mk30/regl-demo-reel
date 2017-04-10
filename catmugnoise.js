@@ -49,18 +49,20 @@ function makesphere (regl) {
       varying vec3 vnorm, vpos, dvpos;
       void main () {
         vnorm = normal;
-        float h = min(
-          pow(abs(((position.y/0.5)-1.0)*0.5),2.0), 0.3);
-        float dx =
-        snoise(position+0.1*sin(time));
-        float dz =
-        snoise(position+0.1*cos(time));
+        //set ripplespeed low for faster ripples.
+        float dxripplespeed = 1.0;
+        float dzripplespeed = 1.0;
+        float dx = snoise(position+2.0*
+          pow(abs(sin(time/dxripplespeed)), 8.4))*0.1;
+        float dz = snoise(position+
+          pow(abs(cos(time/dzripplespeed)), 6.4))*0.1;
         vpos = position;
-        dvpos = position
-          + vec3(dx,dz,0)
-          + vec3(position.x,position.y/12.0-sin(time),position.z/12.0
-          + sin(time));
-        gl_Position = projection * view * model * vec4(dvpos,1);
+        dvpos = position +
+          (vec3(dx,0,dz)
+          + vec3(0,position.y/12.0-0.03*sin(time*2.0),position.z/12.0
+          + 0.03*sin(time)));
+        gl_Position = projection * view * model *
+        vec4(dvpos,1);
       }
     `,
     attributes: {
@@ -71,7 +73,6 @@ function makesphere (regl) {
       texture: feedBackTexture,
       model: function () {
         mat4.identity(model)
-        mat4.scale(model, model, [0.5,1.5,0.5])
         return model
       },
       time: regl.context('time')
