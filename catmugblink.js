@@ -10,7 +10,7 @@ var glsl = require('glslify')
 var feedback = require('./libraries/feedbackeffect.js')
 var drawfeedback = feedback(regl, `
   vec3 sample (vec2 uv, sampler2D tex) {
-    return 0.9*texture2D(tex, (0.99*(2.0*uv-1.0)+1.0)*0.5).rgb;
+    return 0.9*texture2D(tex, (0.98*(2.0*uv-1.0)+1.0)*0.5).rgb;
   }
 `)
 const feedBackTexture = regl.texture({})
@@ -26,13 +26,13 @@ function makecatmug (regl) {
       uniform float time;
       void main () {
         float c = snoise(cnoise(sin(vnorm)));
-        float z = vpos.y*2.0-5.0*sin(time);
-        float y = sin(time);
-        float x = vpos.z*sin(time);
+        float z = sin(time);
+        float y = 0.8;
+        float x = 0.4;
         float d = vpos.y*2.0-5.0*
           pow(abs(sin(time)), 0.5);
         float e = step(c, d); 
-        gl_FragColor = vec4(vec3(z,x,y)*e,1.0);
+        gl_FragColor = vec4(vec3(x,y,z)*e,1.0);
       }
     `,
     vert: glsl`
