@@ -30,8 +30,7 @@ function makecatmug (regl) {
         float y = max((sin(time)*2.0+3.0)/2.0, 0.3);
         float x = vpos.z*sin(time);
         float d = vpos.y*20.0-5.0*sin(time);
-//          pow(abs(sin(time)), 0.5);
-        float e = step(2.0*c, d*0.05); 
+        float e = step( d*0.1, 2.0*c); 
         gl_FragColor = vec4(vec3(z,x,y)*e,1.0);
       }
     `,
