@@ -5,18 +5,17 @@ var camera = require('./libraries/camera.js')(regl, {
 })
 var anormals = require('angle-normals')
 var mat4 = require('gl-mat4')
-var icosphere = require('icosphere')
 var glsl = require('glslify')
 
 var feedback = require('./libraries/feedbackeffect.js')
 var drawfeedback = feedback(regl, `
   vec3 sample (vec2 uv, sampler2D tex) {
-    return 0.95*texture2D(tex, (0.99*(2.0*uv-1.0)+1.0)*0.5).rgb;
+    return 0.95*texture2D(tex, (0.93*(2.0*uv-1.0)+1.0)*0.5).rgb;
   }
 `)
 const feedBackTexture = regl.texture({})
-function makesphere (regl) {
-  var sphere = require('./libraries/catmug.json')
+function makecatmug (regl) {
+  var catmug = require('./libraries/catmug.json')
   var model = []
   return regl({
     frag: glsl`
@@ -64,8 +63,8 @@ function makesphere (regl) {
       }
     `,
     attributes: {
-      position: sphere.positions,
-      normal: anormals(sphere.cells, sphere.positions)
+      position: catmug.positions,
+      normal: anormals(catmug.cells, catmug.positions)
     },
     uniforms: {
       texture: feedBackTexture,
@@ -86,18 +85,18 @@ function makesphere (regl) {
     cull: {
       enable: true 
     },
-    elements: sphere.cells
+    elements: catmug.cells
   })
 }
 var draw = {
-  sphere: makesphere(regl)
+  catmug: makecatmug(regl)
 }
 regl.frame(function () {
   regl.clear({ color: [0,0,0,1], depth: true })
-  drawfeedback({texture: feedBackTexture})    //**
+  drawfeedback({texture: feedBackTexture})    
   camera(function () {
-    draw.sphere()
-    feedBackTexture({    //**
+    draw.catmug()
+    feedBackTexture({    
       copy: true,
       min: 'linear',
       mag: 'linear'
