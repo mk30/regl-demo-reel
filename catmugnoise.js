@@ -1,9 +1,7 @@
 var regl = require('regl')()
 var camera = require('./libraries/camera.js')(regl, {
   center: [0,0,0],
-  distance: 5,
-  phi: 0.5,
-  theta: -1.5
+  distance: 4 
 })
 var anormals = require('angle-normals')
 var mat4 = require('gl-mat4')
