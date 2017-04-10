@@ -50,8 +50,8 @@ function makesphere (regl) {
       void main () {
         vnorm = normal;
         //set ripplespeed low for faster ripples.
-        float dxripplespeed = 1.0;
-        float dzripplespeed = 1.0;
+        float dxripplespeed = sin(time)*15.0;
+        float dzripplespeed = cos(time/5.0)*5.0;
         float dx = snoise(position+2.0*
           pow(abs(sin(time/dxripplespeed)), 8.4))*0.1;
         float dz = snoise(position+
