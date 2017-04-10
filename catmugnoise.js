@@ -10,7 +10,7 @@ var glsl = require('glslify')
 var feedback = require('./libraries/feedbackeffect.js')
 var drawfeedback = feedback(regl, `
   vec3 sample (vec2 uv, sampler2D tex) {
-    return 0.95*texture2D(tex, (0.93*(2.0*uv-1.0)+1.0)*0.5).rgb;
+    return 0.9*texture2D(tex, (0.99*(2.0*uv-1.0)+1.0)*0.5).rgb;
   }
 `)
 const feedBackTexture = regl.texture({})
@@ -26,15 +26,13 @@ function makecatmug (regl) {
       uniform float time;
       void main () {
         float c = snoise(cnoise(sin(vnorm)));
-        float z = vpos.y*2.0-5.0*sin(time);
-        float y = sin(time);
+        float z = vpos.y*2.0-sin(time);
+        float y = max((sin(time)*2.0+3.0)/2.0, 0.3);
         float x = vpos.z*sin(time);
-        float e = c; 
-        if (e < 0.0){
-          gl_FragColor = vec4(vec3(0,0,0),1.0);
-        }
-        else gl_FragColor =
-        vec4(vec3(z,x,y),1.0);
+        float d = vpos.y*20.0-5.0*sin(time);
+//          pow(abs(sin(time)), 0.5);
+        float e = step(2.0*c, d*0.05); 
+        gl_FragColor = vec4(vec3(z,x,y)*e,1.0);
       }
     `,
     vert: glsl`
@@ -68,8 +66,10 @@ function makecatmug (regl) {
     },
     uniforms: {
       texture: feedBackTexture,
-      model: function () {
-        mat4.identity(model)
+      model: function (context) {
+        var theta = context.time
+        mat4.rotateY(model, mat4.identity(model),
+        Math.sin(theta)/2)
         return model
       },
       time: regl.context('time')
