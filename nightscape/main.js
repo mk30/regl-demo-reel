@@ -1,6 +1,6 @@
 var regl = require('regl')()
 var camera = require('regl-camera')(regl, {
-  theta: -0.82, phi: 0.08, distance: 20
+  theta: -0.6, phi: 0.05, distance: 20
 })
 var cube = require('cube-mesh')
 var normalize = require('gl-vec3/normalize')
@@ -32,7 +32,7 @@ for (var z = -16; z <= 16; z++) {
     var h = (2+xsin(xsin(n+x,4)*n+xsin(n+z,3)*n,8))
     //*0.1 at the end below made the bldgs v tall. set to
     //0.01 to make em short again
-      * Math.pow(9-Math.sqrt(x*x+z*z),2) * 0.05
+      * Math.pow(9-Math.sqrt(x*x+z*z),2) * 0.04
       + xsin(x*2+z*3,8)*0.5
     boxes.push({
       location: [x,h*0.25,z],
@@ -71,7 +71,10 @@ regl.frame(function (context) {
     camera(function () {
       draw.box(boxes)
       draw.train({
-        location: [(t*2+16)%32-16,0.05,-10],
+      //-14 below controls when train appears. increase it
+      //to make it show up further back, decrease to make it
+      //show up sooner, closer up
+        location: [(t*2+16)%32-14,0.05,-10],
         scale: [0.05,0.05,0.05]
       })
       draw.cloud(clouds)
