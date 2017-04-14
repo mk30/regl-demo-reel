@@ -61,8 +61,9 @@ for (var i = 0; i < 400; i++) {
 
 regl.frame(function (context) {
   var t = time = context.time
-  var lightblue = rgbcalc(37,149,193)
-  regl.clear({ color: [0.7,0.7,0.7,1], depth: true })
+  var lightblue = [0.145,0.584,0.757,0.7]
+  //regl.clear({ color: [0.7,0.7,0.7,1], depth: true })
+  regl.clear({ color: lightblue, depth: true })
   lights(function () {
     camera(function () {
       draw.box(boxes)
@@ -190,9 +191,9 @@ function box (regl) {
         vec3 d0 = max(0.0,dot(-normalize(light0-vpos),N))
           *vec3(1,0.9,0.7)
           *0.3;
-        float lights = max(0.0,xsin(xsin(vpos.y*32.0,4.0)
-          * xsin(xsin(vpos.x*4.0+vpos.z*3.0,2.0)*19.0
-            + vpos.x*11.0+vpos.z*17.0,2.0)
+        float lights = max(0.0,xsin(xsin(-vpos.y,17.0)
+          * xsin(xsin(vpos.x+vpos.z,12.0)
+            + vpos.x+vpos.z,2.0)
           * xsin(vpos.x*64.0+vpos.z*16.0,2.0)
           * xsin(vpos.y*8.0+vpos.x+vpos.z,4.0),
           4.0)*2.0)
@@ -208,7 +209,7 @@ function box (regl) {
         vec3 blue = vec3(0.145,0.584,0.757);
         vec3 pink = vec3(0.925,0.282,0.439);
         //gl_FragColor = vec4(pow(max((d0+d1)*blue,vec3(0.3)),vec3(1)),1);
-        gl_FragColor = vec4(pow(max((d0+d1)*blue,vec3(0.3)),vec3(1)),1);
+        gl_FragColor = vec4(pow(max((d0+d1)*blue,blue),vec3(1)),1);
         //at any point, calc if color is closer to 1. if
         //closer to 1, 
         //above, change 2.2 to 1.2 for lighter blue
