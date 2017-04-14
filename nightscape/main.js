@@ -4,6 +4,7 @@ var camera = require('regl-camera')(regl, {
 })
 var cube = require('cube-mesh')
 var normalize = require('gl-vec3/normalize')
+var negate = require('gl-vec3/negate')
 var anormals = require('angle-normals')
 var smooth = require('smooth-state')
 var mat4 = require('gl-mat4')
@@ -26,7 +27,7 @@ var boxes = []
 for (var z = -16; z <= 16; z++) {
   for (var x = -16; x <= 16; x++) {
     if (Math.sqrt(x*x+z*z)>50) continue
-    var n = (4+xsin(xsin(x,4)*3+xsin(z,3)*4,8))*4
+    var n = (4+xsin(xsin(x,4)*3+xsin(z,3)*4,8))*6
     var h = (2+xsin(xsin(n+x,4)*n+xsin(n+z,3)*n,8))
       * Math.pow(9-Math.sqrt(x*x+z*z),2) * 0.01
       + xsin(x*2+z*3,8)*0.5
@@ -182,24 +183,34 @@ function box (regl) {
       varying vec3 vnorm, vpos;
       uniform float time;
       float xsin (float x, float n) {
-        return floor(sin(x)*n)*(1.0/n);
+        return floor(sin(x)*n)*(n);
       }
       void main () {
         vec3 N = normalize(vnorm-eye);
-        vec3 d0 = max(0.0,dot(-normalize(light0-vpos),N))*vec3(1,0.9,0.7)*0.3;
+        vec3 d0 = max(0.0,dot(-normalize(light0-vpos),N))
+          *vec3(1,0.9,0.7)
+          *0.3;
         float lights = max(0.0,xsin(xsin(vpos.y*32.0,4.0)
           * xsin(xsin(vpos.x*4.0+vpos.z*3.0,2.0)*19.0
             + vpos.x*11.0+vpos.z*17.0,2.0)
           * xsin(vpos.x*64.0+vpos.z*16.0,2.0)
           * xsin(vpos.y*8.0+vpos.x+vpos.z,4.0),
-          4.0)*2.0) * clamp((vpos.y*6.0-scale.y)/scale.y,0.0,1.0);
-        vec3 d1 = lights*vec3(
-          (1.0+xsin(time*0.2+vpos.x*32.0+vpos.z*31.0,8.0))*0.3+0.5,
-          1,1)*1.5*(1.0+xsin(time*2.0+vpos.x*vpos.x+vpos.y*vpos.y+vpos.z*vpos.z,4.0)*0.2);
+          4.0)*2.0)
+          * clamp((vpos.y*6.0-scale.y)/scale.y,0.0,1.0);
+        vec3 d1 = lights
+          *vec3((1.0+xsin(time*0.2+vpos.x*32.0+vpos.z*31.0,8.0))*0.3+0.5,
+          1,1)
+          *1.5
+          *(1.0+xsin(time*2.0+vpos.x*vpos.x+vpos.y*vpos.y+vpos.z*vpos.z,4.0)*0.3);
+          //eliminate *0.3 in line above to make lights way
+          //more hardcore
         vec3 a = vec3(0.0,0.1,0.1)*0.5;
         vec3 blue = vec3(0.145,0.584,0.757);
         vec3 pink = vec3(0.925,0.282,0.439);
+        //gl_FragColor = vec4(pow(max((d0+d1)*blue,vec3(0.3)),vec3(1)),1);
         gl_FragColor = vec4(pow(max((d0+d1)*blue,vec3(0.3)),vec3(1)),1);
+        //at any point, calc if color is closer to 1. if
+        //closer to 1, 
         //above, change 2.2 to 1.2 for lighter blue
       }
     `,
@@ -238,10 +249,10 @@ function street (regl) {
     frag:`
       precision mediump float;
       void main(){
-        //gl_FragColor = vec4(1,1,1,1);
+        gl_FragColor = vec4(0,0,0,1);
         vec3 blue = vec3(0.145,0.584,0.757);
         vec3 pink = vec3(0.925,0.282,0.439);
-        gl_FragColor = vec4(pow(blue,vec3(2.2)),1);
+        //gl_FragColor = vec4(pow(pink,vec3(2.2)),1);
       }
     `,
     vert:`
