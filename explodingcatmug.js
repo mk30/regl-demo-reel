@@ -36,18 +36,9 @@ function makecatmug (regl) {
         float dzripplespeed = cos(time/5.0)*5.0;
         float dx = snoise(position+2.0*
           pow(abs(sin(time/dxripplespeed)), 8.4))*0.1;
-        float dz = snoise(position+
-          pow(abs(cos(time/dzripplespeed)), 6.4))*0.1;
-        vpos = position;
-        dvpos = position;
-        /*
-        dvpos = position +
-          (vec3(dx,0,dz)
-          + vec3(0,position.y/12.0-0.03*sin(time*2.0),position.z/12.0
-          + 0.03*sin(time)));
-        */
-        gl_Position = projection * view * model *
-        vec4(dvpos,1);
+        float dz = snoise(position);
+        dvpos = position - vec3(dz,dz,dz);
+        gl_Position = projection * view * model * vec4(dvpos,1);
       }
     `,
     attributes: {
