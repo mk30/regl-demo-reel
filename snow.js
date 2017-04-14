@@ -106,22 +106,28 @@ function bg (regl) {
       uniform float time;
       void main () {
         vec3 p = normalize(eye);
-        vec2 spos = vec2(asin(p.x), atan(p.z,-p.y)) + uv;
+        vec2 spos = vec2(sin(p.z), sin(p.y)) - 3.0*uv;
         float x = snoise(vec3(spos,time*0.4))
-          + snoise(vec3(spos*8.0,time*0.2))
+          + snoise(vec3(spos*3.0,time*0.2))
         ;
         float y = snoise(vec3(spos*128.0,time*4.0));
         gl_FragColor = vec4(vec3(0.5,0.6,0.8)*x
-          + vec3(0,0.2,1)*y,0.03);
+          + vec3(0,0.2,1)*y,0.1);
+          //modify last item in above expression to make
+          //snow brighter/darker. 0.03 makes a faint snow.
       }
     `,
     vert: `
       precision mediump float;
       uniform mat4 projection, view;
+      uniform float time;
       attribute vec2 position;
       varying vec2 uv;
       void main () {
-        uv = (position+1.0)*0.5;
+        //add to position to make it pulse faster, subtract
+        //to pulse slower
+        //uv = (position+1.0)/2.5;
+        uv = position;
         gl_Position = vec4(position,0,1);
       }
     `,
@@ -145,16 +151,18 @@ var draw = {
 }
 regl.frame(function (context) {
   regl.clear({ color: [0,0,0,1], depth: true })
-  drawfb({ texture: tex })
-  drawfeedback({texture: feedBackTexture})    
+  //drawfb({ texture: tex })
+  //drawfeedback({texture: feedBackTexture})    
   camera(function () {
-    draw.catmug()
+//    draw.catmug()
     draw.bg()
+    /*
     feedBackTexture({    
       copy: true,
       min: 'linear',
       mag: 'linear'
     })
-    tex({ copy: true, min: 'linear', mag: 'linear' })
+    */
+    //tex({ copy: true, min: 'linear', mag: 'linear' })
   })
 })
