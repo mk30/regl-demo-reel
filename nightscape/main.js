@@ -1,6 +1,6 @@
 var regl = require('regl')()
 var camera = require('regl-camera')(regl, {
-  theta: -0.82, phi: 0.02, distance: 20
+  theta: -0.82, phi: 0.08, distance: 20
 })
 var cube = require('cube-mesh')
 var normalize = require('gl-vec3/normalize')
