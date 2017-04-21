@@ -101,8 +101,7 @@ function sphere (regl) {
       },
       time: regl.context('time')
     },
-    primitive: 'points',
-    elements: mesh.cells
+    primitive: 'points'
   })
 }
 regl.frame(function () {

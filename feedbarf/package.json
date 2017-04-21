@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "bunny": "^1.0.1",
+    "glsl-hsl2rgb": "^1.1.0",
+    "glsl-noise": "0.0.0",
+    "glslify": "^6.0.1",
+    "regl": "^1.3.0",
+    "screen-projected-lines": "^1.1.1"
+  },
+  "browserify": {
+    "transform": [
+      "glslify"
+    ]
+  }
+}
