@@ -33,7 +33,7 @@ function text (regl){
       precision mediump float;
       uniform float t;
       void main () {
-        gl_FragColor = vec4(1.0, 0.5*sin(t)+0.3, 0, 0.4);
+        gl_FragColor = vec4(sin(t), 1.7*sin(t)+0.3, 0.5, 0.4);
       }`,
     vert: `
       precision mediump float;
@@ -77,7 +77,7 @@ function sphere (regl) {
       uniform float time;
       void main () {
         float l = snoise(cnoise(sin(pos*2.0) + vec3(0,-time,0)));
-        gl_FragColor = vec4(l,l*0.3,l*-0.25,0.5);
+        gl_FragColor = vec4(l-0.5,l*0.9,l*-0.25,0.9);
       }
     `,
     vert: `
