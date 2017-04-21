@@ -1,4 +1,4 @@
-var regl = require('regl')()
+var regl = require('regl/regl.js')()
 var stack = [], num = 0
 
 window.addEventListener('keydown', function (ev) {
