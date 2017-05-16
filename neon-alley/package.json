@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angle-normals": "^1.0.0",
     "cube-mesh": "0.0.4"
   }
 }

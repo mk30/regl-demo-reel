@@ -23,5 +23,9 @@ module.exports = function () {
   r.elements = function () { return regl.elements.apply(this, arguments) }
   r.texture = function () { return regl.texture.apply(this, arguments) }
   r.frame = function (f) { stack.push(f) }
+  r._gl = regl._gl
+  r.framebuffer = regl.framebuffer
+  r.read = regl.read
+  r.loaders = regl.loaders
   return r
 }

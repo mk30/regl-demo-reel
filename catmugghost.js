@@ -1,9 +1,9 @@
 var regl = require('regl')()
 var camera = require('./libraries/camera.js')(regl, {
   center: [0,0,0],
-  distance: 5,
-  phi: 0.5,
-  theta: -1.5
+  distance: 2,
+  phi: -0.1,
+  theta: 0 
 })
 var anormals = require('angle-normals')
 var mat4 = require('gl-mat4')
@@ -13,7 +13,7 @@ var glsl = require('glslify')
 var feedback = require('./libraries/feedbackeffect.js')
 var drawfeedback = feedback(regl, `
   vec3 sample (vec2 uv, sampler2D tex) {
-    return 0.95*texture2D(tex, (0.99*(2.0*uv-1.0)+1.0)*0.5).rgb;
+    return 0.95*texture2D(tex, (0.98*(2.0*uv-1.0)+1.0)*0.5).rgb;
   }
 `)
 const feedBackTexture = regl.texture({})
@@ -37,7 +37,7 @@ function makesphere (regl) {
           gl_FragColor = vec4(vec3(0,0,0),1.0);
         }
         else gl_FragColor =
-        vec4(vec3(0.5,0.8,0.3),1.0);
+        vec4(vec3(0,0.8,0.3),1.0);
       }
     `,
     vert: glsl`
@@ -74,7 +74,7 @@ function makesphere (regl) {
       texture: feedBackTexture,
       model: function () {
         mat4.identity(model)
-        mat4.scale(model, model, [0.5,1.5,0.5])
+        mat4.scale(model, model, [1.0,1.3,1.0])
         return model
       },
       time: regl.context('time')
