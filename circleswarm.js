@@ -7,7 +7,7 @@ const icosphere = require('icosphere')
 const rmat = []
 const camera = require('./libraries/camera.js')(regl, {
   center: [0, 0, 0],
-  distance: 20,
+  distance: 10,
   theta: 1
 })
 function ball (regl){
@@ -23,9 +23,9 @@ function ball (regl){
         return hsl.z+hsl.y*(rgb-0.5)*(1.0-abs(2.0*hsl.z-1.0));
       }
       void main () {
-        vec3 c = abs(vnormal) * 0.3
+        vec3 c = abs(vnormal) * 0.1
           + vec3(10.0*sin(vtime - vpos.z/10.0 +
-          vpos.y/200.0),1,1) * 0.4;
+          vpos.y/200.0),1,1) * 0.45;
         c.y = 1.0;
         gl_FragColor = vec4(hsl2rgb(c), 1.0);
       }`,
