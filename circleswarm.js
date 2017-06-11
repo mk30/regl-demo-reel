@@ -51,15 +51,16 @@ function ball (regl){
     elements: mesh.cells,
     uniforms: {
       t: function(context, props){
-        return context.time * props.offset *2.0
+        return context.time * props.itoffset *2.0 *
+        props.otoffset
       },
       trans: regl.prop('trans'),
       model: function(context, props){
         var theta = context.time
         mat4.identity(rmat)
         mat4.translate(rmat, rmat,
-          [0,0,Math.sin(props.foo)*4])
-        mat4.rotateZ(rmat, rmat, props.foo)
+          [0,0,Math.sin(props.irot)*4])
+        mat4.rotateZ(rmat, rmat, props.irot)
         return rmat}
     },
     primitive: "triangles"
@@ -76,13 +77,15 @@ regl.frame(() => {
   var i = 0
   var total = 40
   for (i=0; i<total/2; i++){
-    batch.push({foo: i/10*Math.PI, 
-      offset: i/20, 
+    batch.push({irot: i/10*Math.PI, 
+      itoffset: i/20, 
+      otoffset: Math.cos(i),
       trans: [0,0,0]})
   }
   for (i=0; i<total/2; i++){
-    batch.push({foo: i/10*Math.PI, 
-      offset: i/20, 
+    batch.push({irot: i/10*Math.PI, 
+      itoffset: i/20, 
+      otoffset: Math.sin(i),
       trans: [10,10,0]})
   }
   camera(() => {
