@@ -6,8 +6,8 @@ const normals = require('angle-normals')
 const icosphere = require('icosphere')
 const rmat = []
 const camera = require('./libraries/camera.js')(regl, {
-  center: [0, 0, 0],
-  distance: 10,
+  center: [10, 0, 0],
+  distance: 20,
   theta: 1
 })
 function ball (regl){
@@ -33,6 +33,7 @@ function ball (regl){
       precision mediump float;
       uniform mat4 model, projection, view;
       uniform float t;
+      uniform vec3 trans;
       attribute vec3 position, normal;
       varying vec3 vnormal, vpos;
       varying float vtime;
@@ -40,7 +41,8 @@ function ball (regl){
         vpos = vec3(position.x+3.0*sin(t), 
           position.y,
           abs(sin(position.z)*4.0*sin(t)));
-        gl_Position = projection * view * model * vec4(vpos, 1.0);
+        gl_Position = projection * view * 
+          (model * vec4(vpos, 1.0) + vec4(trans,1.0));
       }`,
     attributes: {
       position: mesh.positions,
@@ -51,13 +53,14 @@ function ball (regl){
       t: function(context, props){
         return context.time * props.offset *2.0
       },
+      trans: regl.prop('trans'),
       model: function(context, props){
         var theta = context.time
-        mat4.translate(rmat, 
-          mat4.identity(rmat),
+        mat4.identity(rmat)
+        mat4.translate(rmat, rmat,
           [0,0,Math.sin(props.foo)*4])
-        return mat4.rotateZ(rmat, rmat, props.foo)
-      }
+        mat4.rotateZ(rmat, rmat, props.foo)
+        return rmat}
     },
     primitive: "triangles"
   })
@@ -70,8 +73,17 @@ regl.frame(() => {
     color: [0, 0, 0, 1]
   })
   batch = []
-  for (var i=0; i<20; i++){
-    batch.push({foo: i/10*Math.PI, offset: i/20, trans: i})
+  var i = 0
+  var total = 40
+  for (i=0; i<total/2; i++){
+    batch.push({foo: i/10*Math.PI, 
+      offset: i/20, 
+      trans: [0,0,0]})
+  }
+  for (i=0; i<total/2; i++){
+    batch.push({foo: i/10*Math.PI, 
+      offset: i/20, 
+      trans: [10,10,0]})
   }
   camera(() => {
     draw.ball(batch)
