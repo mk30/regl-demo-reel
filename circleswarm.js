@@ -52,10 +52,11 @@ function ball (regl){
         return context.time * props.offset *2.0
       },
       model: function(context, props){
-        var theta = context.tick/60
-        mat4.identity(model)
-        return mat4.rotateZ(rmat, mat4.identity(rmat), props.foo)
-        return model
+        var theta = context.time
+        mat4.translate(rmat, 
+          mat4.identity(rmat),
+          [0,0,Math.sin(props.foo)*4])
+        return mat4.rotateZ(rmat, rmat, props.foo)
       }
     },
     primitive: "triangles"
@@ -70,7 +71,7 @@ regl.frame(() => {
   })
   batch = []
   for (var i=0; i<20; i++){
-    batch.push({foo: i/10*Math.PI, offset: i/20})
+    batch.push({foo: i/10*Math.PI, offset: i/20, trans: i})
   }
   camera(() => {
     draw.ball(batch)
