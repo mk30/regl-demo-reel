@@ -16,15 +16,13 @@ function ball (regl){
   return regl({
     frag: `
       precision mediump float;
-      varying vec3 vnormal, vpos;
-      varying float vtime;
+      varying vec3 vpos;
       vec3 hsl2rgb(in vec3 hsl) {
         vec3 rgb = clamp(abs(mod(hsl.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0,0.0,1.0);
         return hsl.z+hsl.y*(rgb-0.5)*(1.0-abs(2.0*hsl.z-1.0));
       }
       void main () {
-        vec3 c = abs(vnormal) * 0.1
-          + vec3(10.0*sin(vtime - vpos.z/10.0 +
+        vec3 c = vec3(10.0*sin(- vpos.z/10.0 +
           vpos.y/200.0),1,1) * 0.45;
         c.y = 1.0;
         gl_FragColor = vec4(hsl2rgb(c), 1.0);
@@ -35,8 +33,7 @@ function ball (regl){
       uniform float t;
       uniform vec3 trans;
       attribute vec3 position, normal;
-      varying vec3 vnormal, vpos;
-      varying float vtime;
+      varying vec3 vpos;
       void main () {
         vpos = vec3(position.x+3.0*sin(t), 
           position.y,
@@ -86,7 +83,7 @@ regl.frame(() => {
     batch.push({irot: i/10*Math.PI, 
       itoffset: i/20, 
       otoffset: Math.sin(i),
-      trans: [10,10,0]})
+      trans: [10,10,-6]})
   }
   camera(() => {
     draw.ball(batch)
