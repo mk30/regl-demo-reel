@@ -41,7 +41,8 @@ function ball (regl){
       attribute vec3 position, normal;
       varying vec3 vpos, batchpath;
       void main () {
-        batchpath = vec3(0, sin(time*3.0), sin(time)*5.0);
+        batchpath = vec3(0, sin(time*3.0 - batchpathwobble),
+        sin(time - batchpathwobble)*5.0);
         vpos = vec3(position.x+3.0*sin(t), 
           position.y,
           abs(sin(position.z)*4.0*sin(t)));
@@ -88,14 +89,14 @@ regl.frame(() => {
     batch.push({irot: i/10*Math.PI, 
       itoffset: i/20, 
       otoffset: Math.cos(i),
-      batchpathwobble: i,
+      batchpathwobble: 1,
       trans: [0,0,0]})
   }
   for (i=0; i<total/2; i++){
     batch.push({irot: i/10*Math.PI, 
       itoffset: i/20, 
       otoffset: Math.sin(i),
-      batchpathwobble: 1,
+      batchpathwobble: 10,
       trans: [10,10,-6]})
   }
   camera(() => {
