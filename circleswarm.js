@@ -6,8 +6,8 @@ const normals = require('angle-normals')
 const icosphere = require('icosphere')
 const rmat = []
 const camera = require('./libraries/camera.js')(regl, {
-  center: [-5, 0, 0],
-  distance: 40,
+  center: [-5, 2, 0],
+  distance: 15,
   theta: 0
 })
 function ball (regl){
@@ -23,9 +23,8 @@ function ball (regl){
         return hsl.z+hsl.y*(rgb-0.5)*(1.0-abs(2.0*hsl.z-1.0));
       }
       void main () {
-        vec3 c = vec3(10.0*sin(- vpos.z/10.0 +
-          vpos.y/200.0),1,1) * 0.45;
-        c.y = 1.0;
+        vec3 c = vec3(sin((0.1*vpos.x)/ 
+          vpos.y),1,0.7) * 0.7;
         /*
         float r = sin(time);
         float g = cos(time);
@@ -37,12 +36,12 @@ function ball (regl){
     vert: `
       precision mediump float;
       uniform mat4 model, projection, view;
-      uniform float t, time;
+      uniform float t, time, batchpathwobble;
       uniform vec3 trans;
       attribute vec3 position, normal;
       varying vec3 vpos, batchpath;
       void main () {
-        batchpath = vec3(0, sin(time*8.0), sin(time)*30.0);
+        batchpath = vec3(0, sin(time*3.0), sin(time)*5.0);
         vpos = vec3(position.x+3.0*sin(t), 
           position.y,
           abs(sin(position.z)*4.0*sin(t)));
@@ -63,6 +62,7 @@ function ball (regl){
         props.otoffset
       },
       trans: regl.prop('trans'),
+      batchpathwobble: regl.prop('batchpathwobble'),
       model: function(context, props){
         var theta = context.time
         mat4.identity(rmat)
@@ -88,12 +88,14 @@ regl.frame(() => {
     batch.push({irot: i/10*Math.PI, 
       itoffset: i/20, 
       otoffset: Math.cos(i),
+      batchpathwobble: i,
       trans: [0,0,0]})
   }
   for (i=0; i<total/2; i++){
     batch.push({irot: i/10*Math.PI, 
       itoffset: i/20, 
       otoffset: Math.sin(i),
+      batchpathwobble: 1,
       trans: [10,10,-6]})
   }
   camera(() => {
