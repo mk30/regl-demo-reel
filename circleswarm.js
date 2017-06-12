@@ -117,11 +117,11 @@ function bg (regl) {
         vec3 p = normalize(eye);
         vec2 spos = vec2(asin(p.x), atan(p.z,-p.y)) + uv;
         float x = snoise(vec3(spos,time*0.4))
-          + snoise(vec3(spos*8.0,time*0.2))
+          + snoise(vec3(spos,time*0.2))
         ;
-        float y = snoise(vec3(spos*128.0,time*4.0));
+        float y = snoise(vec3(spos*12.0,time*4.0));
         gl_FragColor = vec4(vec3(0.5,0.3,1)*x
-          + vec3(0,0.4,1)*y,0.03);
+          + vec3(0,0.4,1)*y,0.1);
       }
     `,
     vert: `
@@ -130,7 +130,6 @@ function bg (regl) {
       attribute vec2 position;
       varying vec2 uv;
       void main () {
-        uv = (position+1.0)*0.5;
         gl_Position = vec4(position,0,1);
       }
     `,
