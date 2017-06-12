@@ -6,9 +6,9 @@ const normals = require('angle-normals')
 const icosphere = require('icosphere')
 const rmat = []
 const camera = require('./libraries/camera.js')(regl, {
-  center: [10, 0, 0],
-  distance: 20,
-  theta: 1
+  center: [-5, 0, 0],
+  distance: 40,
+  theta: 0
 })
 function ball (regl){
   var model = [], vtmp = []
@@ -17,6 +17,7 @@ function ball (regl){
     frag: `
       precision mediump float;
       varying vec3 vpos;
+      uniform float time;
       vec3 hsl2rgb(in vec3 hsl) {
         vec3 rgb = clamp(abs(mod(hsl.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0,0.0,1.0);
         return hsl.z+hsl.y*(rgb-0.5)*(1.0-abs(2.0*hsl.z-1.0));
@@ -25,21 +26,30 @@ function ball (regl){
         vec3 c = vec3(10.0*sin(- vpos.z/10.0 +
           vpos.y/200.0),1,1) * 0.45;
         c.y = 1.0;
+        /*
+        float r = sin(time);
+        float g = cos(time);
+        vec3 color = vec3(r, g, 1);
+        gl_FragColor = vec4(color,1);
+        */
         gl_FragColor = vec4(hsl2rgb(c), 1.0);
       }`,
     vert: `
       precision mediump float;
       uniform mat4 model, projection, view;
-      uniform float t;
+      uniform float t, time;
       uniform vec3 trans;
       attribute vec3 position, normal;
-      varying vec3 vpos;
+      varying vec3 vpos, batchpath;
       void main () {
+        batchpath = vec3(0, sin(time*8.0), sin(time)*30.0);
         vpos = vec3(position.x+3.0*sin(t), 
           position.y,
           abs(sin(position.z)*4.0*sin(t)));
         gl_Position = projection * view * 
-          (model * vec4(vpos, 1.0) + vec4(trans,1.0));
+          (model * vec4(vpos, 1.0)
+            + vec4(trans,1.0)
+            + vec4(batchpath,1.0));
       }`,
     attributes: {
       position: mesh.positions,
@@ -47,6 +57,7 @@ function ball (regl){
     },
     elements: mesh.cells,
     uniforms: {
+      time: regl.context('time'),
       t: function(context, props){
         return context.time * props.itoffset *2.0 *
         props.otoffset
