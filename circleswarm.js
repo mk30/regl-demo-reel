@@ -85,7 +85,7 @@ function blobsbg (regl) {
         //modify 12 to make cells bigger
         vec3 calccolor = vec3(0,0.4,1.0)*x-y;
         gl_FragColor =
-        vec4(calccolor,pow(1.0-length(calccolor), 3.0));
+        vec4(calccolor,pow(length(calccolor), 8.0));
         //vec4(calccolor,pow(length(calccolor)-1.0, 4.0));
       }
     `,
