@@ -75,37 +75,93 @@ function ball (regl){
     primitive: "triangles"
   })
 }
-var draw = {
-  ball: ball(regl),
-  bg: bg(regl)
+function blobsbg (regl) {
+  return regl({
+    frag: glsl`
+      precision mediump float;
+      #pragma glslify: snoise = require('glsl-noise/simplex/3d')
+      varying vec2 uv;
+      uniform vec3 eye;
+      uniform float time;
+      void main () {
+        vec3 p = normalize(eye);
+        vec2 spos = vec2(p.x-time, p.y) + uv;
+        float x = snoise(vec3(p.x, p.y,time)) + snoise(vec3(spos,time));
+        float y = snoise(vec3(spos*12.0,time*4.0));
+        //vec3 calccolor = vec3(0.2,0.7,1)*x + vec3(1,4,1)*y;
+        vec3 calccolor = vec3(0,0.4,1.0)*x+y;
+        gl_FragColor = vec4(calccolor,pow(1.0-length(calccolor), 4.0));
+      }
+    `,
+    vert: `
+      precision mediump float;
+      uniform mat4 projection, view;
+      attribute vec2 position;
+      varying vec2 uv;
+      void main () {
+        uv = (position+1.0)*0.5;
+        gl_Position = vec4(position,0,1);
+      }
+    `,
+    attributes: {
+      position: [-4,4,-4,-4,4,0]
+    },
+    count: 3,
+    uniforms: {
+      time: regl.context('time')
+    },
+    blend: {
+      enable: true,
+      func: { src: 'src alpha', dst: 'one minus src alpha' }
+    },
+    depth: { mask: false }
+  })
 }
-regl.frame(() => {
-  regl.clear({
-    color: [0, 0, 0, 1]
-  })
-  batch = []
-  var i = 0
-  var total = 40
-  for (i=0; i<total/2; i++){
-    batch.push({irot: i/10*Math.PI, 
-      itoffset: i/20, 
-      otoffset: Math.cos(i),
-      batchpathwobble: 1,
-      trans: [0,0,0]})
-  }
-  for (i=0; i<total/2; i++){
-    batch.push({irot: i/10*Math.PI, 
-      itoffset: i/20, 
-      otoffset: Math.sin(i),
-      batchpathwobble: 10,
-      trans: [10,10,-6]})
-  }
-  camera(() => {
-    draw.ball(batch)
-    draw.bg()
-  })
-})
 function bg (regl) {
+  return regl({
+    frag: glsl`
+      precision mediump float;
+      #pragma glslify: snoise = require('glsl-noise/simplex/3d')
+      varying vec2 uv;
+      uniform vec3 eye;
+      uniform float time;
+      void main () {
+        vec3 p = normalize(eye);
+        vec2 spos = vec2(sin(p.x), atan(p.z,-p.y)) + uv*uv;
+        float x = snoise(vec3(spos,time*0.4))
+          + snoise(vec3(spos*8.0,time*0.2))
+        ;
+        float y = snoise(vec3(spos*128.0,time*4.0));
+        vec3 calccolor = vec3(0.2,0.7,1)*x + vec3(1,4,1)*y;
+        gl_FragColor =
+        vec4(calccolor,pow(length(calccolor), 4.0));
+      }
+    `,
+    vert: `
+      precision mediump float;
+      uniform mat4 projection, view;
+      attribute vec2 position;
+      varying vec2 uv;
+      void main () {
+        uv = (position)*0.1;
+        gl_Position = vec4(position,0,1);
+      }
+    `,
+    attributes: {
+      position: [-4,4,-4,-4,4,0]
+    },
+    count: 3,
+    uniforms: {
+      time: regl.context('time')
+    },
+    blend: {
+      enable: true,
+      func: { src: 'src alpha', dst: 'one minus src alpha' }
+    },
+    depth: { mask: false }
+  })
+}
+function originallightning (regl) {
   return regl({
     frag: glsl`
       precision mediump float;
@@ -117,8 +173,7 @@ function bg (regl) {
         vec3 p = normalize(eye);
         vec2 spos = vec2(asin(p.x), atan(p.z,-p.y)) + uv;
         float x = snoise(vec3(spos,time*0.4))
-          + snoise(vec3(spos,time*0.2))
-        ;
+          + snoise(vec3(spos,time*0.2));
         float y = snoise(vec3(spos*12.0,time*4.0));
         gl_FragColor = vec4(vec3(0.5,0.3,1)*x
           + vec3(0,0.4,1)*y,0.1);
@@ -147,3 +202,37 @@ function bg (regl) {
     depth: { mask: false }
   })
 }
+var draw = {
+  ball: ball(regl),
+  blobsbg: blobsbg(regl),
+  bg: bg(regl),
+  originallightning: originallightning(regl)
+}
+regl.frame(() => {
+  regl.clear({
+    color: [0.3, 0.3, 0.3, 1]
+  })
+  batch = []
+  var i = 0
+  var total = 40
+  for (i=0; i<total/2; i++){
+    batch.push({irot: i/10*Math.PI, 
+      itoffset: i/20, 
+      otoffset: Math.cos(i),
+      batchpathwobble: 1,
+      trans: [0,0,0]})
+  }
+  for (i=0; i<total/2; i++){
+    batch.push({irot: i/10*Math.PI, 
+      itoffset: i/20, 
+      otoffset: Math.sin(i),
+      batchpathwobble: 10,
+      trans: [10,10,-6]})
+  }
+  camera(() => {
+    draw.ball(batch)
+    //draw.bg()
+    draw.blobsbg()
+    draw.originallightning()
+  })
+})
