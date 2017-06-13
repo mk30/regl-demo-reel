@@ -25,12 +25,6 @@ function ball (regl){
       void main () {
         vec3 c = vec3(sin((0.1*vpos.x)/ 
           vpos.y),1,0.7) * 0.7;
-        /*
-        float r = sin(time);
-        float g = cos(time);
-        vec3 color = vec3(r, g, 1);
-        gl_FragColor = vec4(color,1);
-        */
         gl_FragColor = vec4(hsl2rgb(c), 1.0);
       }`,
     vert: `
@@ -85,12 +79,14 @@ function blobsbg (regl) {
       uniform float time;
       void main () {
         vec3 p = normalize(eye);
-        vec2 spos = vec2(p.x-time, p.y) + uv;
+        vec2 spos = vec2(p.x-time, p.y) + uv*2.0;
         float x = snoise(vec3(p.x, p.y,time)) + snoise(vec3(spos,time));
-        float y = snoise(vec3(spos*12.0,time*4.0));
-        //vec3 calccolor = vec3(0.2,0.7,1)*x + vec3(1,4,1)*y;
-        vec3 calccolor = vec3(0,0.4,1.0)*x+y;
-        gl_FragColor = vec4(calccolor,pow(1.0-length(calccolor), 4.0));
+        float y = snoise(vec3(spos*12.0,(1.0-time)));
+        //modify 12 to make cells bigger
+        vec3 calccolor = vec3(0,0.4,1.0)*x-y;
+        gl_FragColor =
+        vec4(calccolor,pow(1.0-length(calccolor), 3.0));
+        //vec4(calccolor,pow(length(calccolor)-1.0, 4.0));
       }
     `,
     vert: `
@@ -127,14 +123,14 @@ function bg (regl) {
       uniform float time;
       void main () {
         vec3 p = normalize(eye);
-        vec2 spos = vec2(sin(p.x), atan(p.z,-p.y)) + uv*uv;
-        float x = snoise(vec3(spos,time*0.4))
-          + snoise(vec3(spos*8.0,time*0.2))
-        ;
-        float y = snoise(vec3(spos*128.0,time*4.0));
-        vec3 calccolor = vec3(0.2,0.7,1)*x + vec3(1,4,1)*y;
+        vec2 spos = vec2(p.x-time, p.y) + uv*2.0;
+        float x = snoise(vec3(p.x, p.y,time)) + snoise(vec3(spos,time));
+        float y = snoise(vec3(spos*12.0,(1.0-time)));
+        //modify 12 to make cells bigger
+        vec3 calccolor = vec3(0,0.4,1.0)*x-y;
         gl_FragColor =
-        vec4(calccolor,pow(length(calccolor), 4.0));
+        //vec4(calccolor,pow(length(calccolor), 8.0));
+        vec4(calccolor,pow(length(calccolor)-1.0, 4.0));
       }
     `,
     vert: `
@@ -210,7 +206,7 @@ var draw = {
 }
 regl.frame(() => {
   regl.clear({
-    color: [0.3, 0.3, 0.3, 1]
+    color: [0, 0, 0, 1]
   })
   batch = []
   var i = 0
@@ -230,9 +226,9 @@ regl.frame(() => {
       trans: [10,10,-6]})
   }
   camera(() => {
-    draw.ball(batch)
-    //draw.bg()
+    draw.bg()
     draw.blobsbg()
-    draw.originallightning()
+    draw.ball(batch)
+    //draw.originallightning()
   })
 })
