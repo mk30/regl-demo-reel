@@ -82,11 +82,9 @@ function blobsbg (regl) {
         vec2 spos = vec2(p.x-time, p.y) + uv*2.0;
         float x = snoise(vec3(p.x, p.y,time)) + snoise(vec3(spos,time));
         float y = snoise(vec3(spos*12.0,(1.0-time)));
-        //modify 12 to make cells bigger
         vec3 calccolor = vec3(0,0.4,1.0)*x-y;
         gl_FragColor =
         vec4(calccolor,pow(length(calccolor), 8.0));
-        //vec4(calccolor,pow(length(calccolor)-1.0, 4.0));
       }
     `,
     vert: `
@@ -129,8 +127,7 @@ function bg (regl) {
         //modify 12 to make cells bigger
         vec3 calccolor = vec3(0,0.4,1.0)*x-y;
         gl_FragColor =
-        //vec4(calccolor,pow(length(calccolor), 8.0));
-        vec4(calccolor,pow(length(calccolor)-1.0, 4.0));
+        vec4(calccolor,pow(1.0-length(calccolor)-1.0, 4.0));
       }
     `,
     vert: `
