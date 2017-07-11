@@ -1,6 +1,6 @@
 var glsl = require('glslify')
 var regl = require('regl')()
-var camera = require('./libraries/camera.js')(regl, {
+var camera = require('../libraries/camera.js')(regl, {
   distance: 4, far: 5000
 })
 var mat4 = require('gl-mat4')
@@ -8,7 +8,7 @@ var vec3 = require('gl-vec3')
 var anormals = require('angle-normals')
 
 function makecatmug (regl) {
-  var catmug = require('./libraries/catmug.json')
+  var catmug = require('../libraries/catmug.json')
   var model = []
   return regl({
     frag: glsl`
