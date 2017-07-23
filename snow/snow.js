@@ -9,7 +9,6 @@ var icosphere = require('icosphere')
 //var feedback = require('regl-feedback')
 var anormals = require('angle-normals')
 var feedback = require('../libraries/feedbackeffect.js')
-
 var tex = regl.texture()
 var drawfb = feedback(regl, `
   vec3 sample (vec2 uv, sampler2D tex) {
@@ -102,17 +101,14 @@ function bg (regl) {
       precision mediump float;
       #pragma glslify: snoise = require('glsl-noise/simplex/3d')
       varying vec2 uv;
-      uniform vec3 eye;
-      uniform float time;
+      uniform float time, aspect;
       void main () {
-        vec3 p = normalize(eye);
-        vec2 spos = vec2(sin(p.z), sin(p.y)) - 3.0*uv;
-        float x = snoise(vec3(spos,time*0.4))
-          + snoise(vec3(spos*3.0,time*0.2))
-        ;
-        float y = snoise(vec3(spos*128.0,time*4.0));
-        gl_FragColor = vec4(vec3(0.5,0.6,0.8)*x
-          + vec3(0,0.2,1)*y,0.1);
+        vec2 spos = (-3.0*uv)*vec2(aspect, 1);
+        float y =
+        pow(abs(snoise(vec3(spos*3.0-vec2(0,time*0.3),time*0.05))),
+        16.0);
+        gl_FragColor = vec4(vec3(0.5,0.6,0.8)*y
+          + vec3(0,0.2,1)*y,0.5);
           //modify last item in above expression to make
           //snow brighter/darker. 0.03 makes a faint snow.
       }
@@ -136,7 +132,10 @@ function bg (regl) {
     },
     count: 3,
     uniforms: {
-      time: regl.context('time')
+      time: regl.context('time'),
+      aspect: function(context){
+        return context.viewportWidth/context.viewportHeight
+      }
     },
     blend: {
       enable: true,
