@@ -3,3 +3,6 @@
 
 ./cmd.sh nightscape.js spacewalk.js cat/main.js nightmarecats.js catmugwigglepaint.js chromecatmug.js unicornwoo.js bye.js blobfromthetopcatmug.js yellowparticlevortex.js catmugwoo.js catmugghost.js feedbackgalaxy.js ghost.js greenstripes.js | indexhtmlify > test.html
 
+
+
+./cmd.sh nightmarecats.js dialog/main.js cathello2.js catmugball.js catmugwoo.js hatetoleave.js hatetolose.js iphone.js kate.js unicornwoo.js yellowparticlevortex.js | indexhtmlify > kate.html

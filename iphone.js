@@ -2,7 +2,7 @@ var regl = require('regl')()
 var mat4 = require('gl-mat4')
 var glsl = require('glslify')
 var normals = require('angle-normals')
-var mesh = require('./iphonefiles/phone.json')
+var mesh = require('./phone.json')
 
 var camera = require('regl-camera')(regl, {
   center: [0, 6, 0],
