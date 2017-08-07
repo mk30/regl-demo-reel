@@ -11,7 +11,7 @@ var drawfeedback = feedback(regl, `
   }
 `)
 const feedBackTexture = regl.texture({})
-const textMesh = vectorizeText('i hate to leave you', {
+const textMesh = vectorizeText('i hate to lose you', {
   triangles: true,
   width: 4,
   textAlign: 'center',
