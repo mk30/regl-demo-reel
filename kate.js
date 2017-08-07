@@ -1,7 +1,7 @@
 const regl = require('regl')()
 const mat4 = require('gl-mat4')
 var fs = require('fs');
-var image = fs.readFileSync(__dirname + '/kate2.jpg', 'base64');
+var image = fs.readFileSync(__dirname + '/kate.jpg', 'base64');
 var imageurl = 'data:image/png;base64,' + image
 var cubePosition = [
   [-1.5, +1.5, +1.5], [+0.5, +0.5, +0.5], [+0.5, -0.5, +0.5], [-0.5, -0.5, +0.5], // positive z face.
