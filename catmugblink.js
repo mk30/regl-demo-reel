@@ -6,7 +6,6 @@ var camera = require('./libraries/camera.js')(regl, {
 var anormals = require('angle-normals')
 var mat4 = require('gl-mat4')
 var glsl = require('glslify')
-
 var feedback = require('./libraries/feedbackeffect.js')
 var drawfeedback = feedback(regl, `
   vec3 sample (vec2 uv, sampler2D tex) {
