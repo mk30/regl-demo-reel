@@ -6,13 +6,34 @@ window.addEventListener('keydown', function (ev) {
     num = (num + 1) % stack.length
   } else if (ev.keyCode === 0x27) { // right
     num = (num - 1 + stack.length) % stack.length
+  } else if (ev.keyCode === 0x4E) { // N
+    num = 0
+  } else if (ev.keyCode === 0x4B) { // K
+    num = 10
+  } else if (ev.keyCode === 0x48) { // H 
+    num = 9
+  } else if (ev.keyCode === 0x59) { // Y 
+    num = 8
+  } else if (ev.keyCode === 0x55) { // U 
+    num = 7
+  } else if (ev.keyCode === 0x49) { // I 
+    num = 6
+  } else if (ev.keyCode === 0x53) { // S 
+    num = 5
+  } else if (ev.keyCode === 0x56) { // V 
+    num = 4 
+  } else if (ev.keyCode === 0x43) { // C 
+    num = 3 
+  } else if (ev.keyCode === 0x42) { // B 
+    num = 2 
+  } else if (ev.keyCode === 0x44) { // D 
+    num = 1 
   }
 })
 
 regl.frame(function (context) {
   if (stack.length) stack[num].apply(this, arguments)
 })
-
 module.exports = function () {
   var r = function () { return regl.apply(this, arguments) }
   r.context = function () { return regl.context.apply(this, arguments) }
