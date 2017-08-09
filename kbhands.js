@@ -1,7 +1,7 @@
 const regl = require('regl')()
 const mat4 = require('gl-mat4')
 var fs = require('fs');
-var image = fs.readFileSync(__dirname + '/emoji.jpg', 'base64');
+var image = fs.readFileSync(__dirname + '/kbhands.jpg', 'base64');
 var imageurl = 'data:image/png;base64,' + image
 const drawCube = regl({
   frag: `
@@ -10,10 +10,12 @@ const drawCube = regl({
   varying vec2 uv;
   uniform float time;
   void main () {
-    float extra = cos(time)/(uv.x*uv.y);
-    gl_FragColor = texture2D(tex,vec2(uv.x +
-    sin(time*2.0)/8.0,
-    uv.y*(cos(time*3.0)-extra*0.1)));
+    vec2 vuv = sin(time)/uv;
+    float extra = cos(time)/(vuv.x*vuv.y);
+    gl_FragColor = texture2D(tex,vec2(
+      (1.0-uv.x),
+      uv.y*(cos(1.0-extra)-extra*0.5)
+    ));
   }`,
   vert: `
   precision mediump float;
