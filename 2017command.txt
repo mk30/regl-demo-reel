@@ -1,8 +1,0 @@
-./cmd.sh nightmarecats.js catmugtransform.js catmugblink.js cat/main.js catmugghost.js catmugwoo.js neon-alley/main.js spacewalk/main.js unicornwoo.js catmugwigglepaint.js yellowparticlevortex.js blobfromthetopcatmug.js nightscape/main.js chromecatmug.js feedbackgalaxy.js feedbarf/main.js | indexhtmlify > htmls/04-22-01.html
-
-
-./cmd.sh nightscape.js spacewalk.js cat/main.js nightmarecats.js catmugwigglepaint.js chromecatmug.js unicornwoo.js bye.js blobfromthetopcatmug.js yellowparticlevortex.js catmugwoo.js catmugghost.js feedbackgalaxy.js ghost.js greenstripes.js | indexhtmlify > test.html
-
-
-
-./cmd.sh nightmarecats.js dialog/main.js cathello2.js catmugball.js catmugwoo.js hatetoleave.js hatetolose.js iphone.js emoji.js computer.js kbhands.js k116.js kate.js unicornwoo.js yellowparticlevortex.js | indexhtmlify > kate.html
