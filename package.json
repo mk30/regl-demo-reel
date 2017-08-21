@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "makehtml": "browserify $1 | indexhtmlify > $2",
-    "build": "",
-    "run": "budo $1"
+    "start": "budo $1"
   },
   "browserify": {
     "transform": [

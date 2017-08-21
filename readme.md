@@ -80,9 +80,21 @@ once there, do `npm install` to install the required dependencies.
 once you've installed, you will have access to a number of scripts you can run
 from the command line:
 
-``
+`npm run start`: run `npm run start` followed by the name of the file you want
+to run. like this: `npm run start emoji.js`. if everything works correctly, you
+should see something like `[0001] info  Server running at
+http://192.168.93.17:9966/ (connect)`. open your browser and go to this url
+`localhost:9966`. you should see the demo running. to stop this demo and start
+running another one, go back to the command line and do `CTRL + c` to stop the
+server. 
 
-### understanding the code
+`npm run makehtml`: run `npm run makehtml` followed by two file names. the first
+should be the input file (eg `emoji.js`) and the second should be the output
+file (eg `emoji.html`). here's an example of the entire command: `npm run
+makehtml emoji.js emoji.html`. this will generate an html file from one of the
+demos.  
+
+### build the demo reel html file
 
 the demo reel is made up of 11 different demo programs (the various .js files)
 that get put one after the other into a single html file. that html file will
@@ -102,19 +114,14 @@ file on windows).
 
 once you've done the `chmod` command, run this command:
 
+`./cmd.sh nightmarecats.js dialog/main.js cathello2.js catmugball.js catmugwoo.js hatetoleave.js hatetolose.js iphone.js emoji.js computer.js kbhands.js k116.js kate.js unicornwoo.js yellowparticlevortex.js | indexhtmlify > kate.html`
+
+this command will run `cmd.sh` with all the files named after it then pack the
+whole thing into `kate.html`. if you like, you can change `kate.html` to any name you want.
 
 
 
-
-
-
-### build your own version of the demo reel
-
-
-
-
-
-
-
+i hope you find this useful and if you have any questions, feel free to ask on
+twitter: [@marinakukso](https://twitter.com/marinakukso).
 
 all demos were created with [regl](http://regl.party).
