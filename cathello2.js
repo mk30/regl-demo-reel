@@ -10,8 +10,8 @@ const drawCube = regl({
   varying vec2 uv;
   uniform float time;
   void main () {
-    vec2 vuv = uv*(sin(time*0.1+uv)*(0.5-0.2*0.5)+0.5+0.2);
-    gl_FragColor = texture2D(tex,vec2(1.0-vuv.x,vuv.y));
+    vec2 vuv = uv*(sin(time*0.5+uv)*(0.3-0.2*0.5)+0.5+0.4);
+    gl_FragColor = texture2D(tex,vec2(1.0-vuv.x-0.15,vuv.y));
   }`,
   vert: `
   precision mediump float;

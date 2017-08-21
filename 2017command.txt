@@ -5,4 +5,4 @@
 
 
 
-./cmd.sh nightmarecats.js dialog/main.js cathello2.js catmugball.js catmugwoo.js hatetoleave.js hatetolose.js iphone.js kate.js unicornwoo.js yellowparticlevortex.js | indexhtmlify > kate.html
+./cmd.sh nightmarecats.js dialog/main.js cathello2.js catmugball.js catmugwoo.js hatetoleave.js hatetolose.js iphone.js emoji.js computer.js kbhands.js k116.js kate.js unicornwoo.js yellowparticlevortex.js | indexhtmlify > kate.html

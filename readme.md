@@ -1,27 +1,35 @@
 the below demo reel acted as the backing visual for [shani
-aviram's](http://shaniaviram.net/) set at the [2016 night of 1,000
+aviram's](http://shaniaviram.net/) set at the [2017 night of 1,000
 kates](https://www.facebook.com/1000kates) which took place 
-on sept. 3, 2016 in philadelphia.
+on aug. 12, 2017 in philadelphia.
 
 
 
 ###demos with source code
 
 
-[full demo reel](http://kitties.neocities.org/shani.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shani.js))
+[full demo reel](https://kitties.neocities.org/kate.html)
 
-individual demos (in order):
+in the above demo reel, you can hop to individual demos by hitting the below
+keys:
 
-1. [swimmypuff.js](http://kitties.neocities.org/swimmypuff.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shaniswimmypuff.js))
-2.  [cactus.js](http://kitties.neocities.org/cactus.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanicactus.js)) 
-3. [text1.js](http://kitties.neocities.org/text1.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanitext.js))
-4. [skellyscissor.js](http://kitties.neocities.org/skellyscissor.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shaniskellyscissor.js))
-5. [cyl.js](http://kitties.neocities.org/democyl.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanicyl.js))
-6. [rotatypoints.js](http://kitties.neocities.org/rotatypoints.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanirotatypoints.js))
-7. [icecream.js] (http://kitties.neocities.org/icecream.html) ([source code)](https://github.com/mk30/regl-demo-reel/blob/master/shaniicecream.js))
-8. [text2.js](http://kitties.neocities.org/text2.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shanitext2.js))
-9. [4x4.js](http://kitties.neocities.org/4x4.html) ([source code](https://github.com/mk30/regl-demo-reel/blob/master/shani4x4.js))
-
+n: nightmare cats ([demo](https://kitties.neocities.org/nightmarecats.html)) (code)
+k: kate shape ([demo](https://kitties.neocities.org/deepergeometry.html)) (code)
+g: kate group ([demo](https://kitties.neocities.org/k116.html)) (code)
+a: kate hands ([demo](https://kitties.neocities.org/kbhands.html)) (code)
+e: emoji ([demo](https://kitties.neocities.org/emoji.html)) (code)
+h: hello cat ([demo](https://kitties.neocities.org/cathello2.html)) (code)
+y: yellow particles ([demo](https://kitties.neocities.org/yellowparticlevortex.html)) (code)
+u: unicorns ([demo](https://kitties.neocities.org/unicornwoo.html)) (code)
+c: computer ([demo](https://kitties.neocities.org/computer.html)) (code)
+i: iphone ([demo](https://kitties.neocities.org/iphone.html)) (code)
+s: hate to lose ([demo](https://kitties.neocities.org/hatetolose.html)) (code)
+v: hate to leave ([demo](https://kitties.neocities.org/hatetoleave.html)) (code)
+m: catmugs ([demo](https://kitties.neocities.org/catmugwoo.html)) (code)
+b: ball of catmugs ([demo](https://kitties.neocities.org/catmugball.html)) (code)
+d: dialog.exe (note: this one was made by [substack](https://twitter.com/substack))
+([demo](https://substack.neocities.org/dialog.exe/))
+([code](https://github.com/substack/glart/tree/master/dialog.exe))
 
 all demos were created with [regl](http://regl.party).
 

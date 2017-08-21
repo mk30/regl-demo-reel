@@ -9,20 +9,28 @@ window.addEventListener('keydown', function (ev) {
   } else if (ev.keyCode === 0x4E) { // N
     num = 0
   } else if (ev.keyCode === 0x4B) { // K
-    num = 10
+    num = 14
+  } else if (ev.keyCode === 0x47) { // G 
+    num = 13
+  } else if (ev.keyCode === 0x41) { // A 
+    num = 12
+  } else if (ev.keyCode === 0x45) { // E 
+    num = 11
   } else if (ev.keyCode === 0x48) { // H 
-    num = 9
+    num = 10
   } else if (ev.keyCode === 0x59) { // Y 
-    num = 8
+    num = 9
   } else if (ev.keyCode === 0x55) { // U 
-    num = 7
+    num = 8 
+  } else if (ev.keyCode === 0x43) { // C 
+    num = 7 
   } else if (ev.keyCode === 0x49) { // I 
     num = 6
   } else if (ev.keyCode === 0x53) { // S 
     num = 5
   } else if (ev.keyCode === 0x56) { // V 
     num = 4 
-  } else if (ev.keyCode === 0x43) { // C 
+  } else if (ev.keyCode === 0x4D) { // M 
     num = 3 
   } else if (ev.keyCode === 0x42) { // B 
     num = 2 
