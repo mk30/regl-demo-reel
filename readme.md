@@ -119,7 +119,7 @@ once you've done the `chmod` command, run this command:
 this command will run `cmd.sh` with all the files named after it then pack the
 whole thing into `kate.html`. if you like, you can change `kate.html` to any name you want.
 
-
+***
 
 i hope you find this useful and if you have any questions, feel free to ask on
 twitter: [@marinakukso](https://twitter.com/marinakukso).
