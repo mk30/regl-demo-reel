@@ -3,9 +3,9 @@ aviram's](http://shaniaviram.net/) set at the [2017 night of 1,000
 kates](https://www.facebook.com/1000kates) which took place 
 on aug. 12, 2017 in philadelphia.
 
-[![shani](https://kitties.neocities.org/2017-08-12-01-sm.jpg)]
+![shani](https://kitties.neocities.org/2017-08-12-01-sm.jpg)
 
-(photos by [kenzi crash](http://kenzicrash.com))
+(photo by [kenzi crash](http://kenzicrash.com))
 
 
 ### demos with source code
@@ -90,6 +90,18 @@ include all the assets (images) used in the demos. it will also include
 javascript that allows you to switch between demos by hitting certain keys on
 the keyboard (as noted above).
 
+there's a shell program called `cmd.sh` that takes all the files you give it,
+runs them through the `regl.js` program (which is where the keys that go with
+each demo get assigned, among other things), and then outputs an html file that
+you can open in a browser like any other html file.
+
+to use `cmd.sh`, once you've cloned and installed everything (as described
+above), navigate via command line to the directory where you've cloned everything into and run `chmod
++x cmd.sh` (this command lets you run `cmd.sh` as an executable, like a .exe
+file on windows).
+
+once you've done the `chmod` command, run this command:
+
 
 
 
@@ -106,7 +118,3 @@ the keyboard (as noted above).
 
 
 all demos were created with [regl](http://regl.party).
-
-the entire demo reel can be packed into a single (large, ~12mb in this case) html file that runs in most browsers. it also works offline. 
-
-see more of my [regl experiments](https://github.com/mk30/reglexperiments) and some of my [other programming projects](http://kukso.space/programming.html).
