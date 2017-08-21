@@ -3,8 +3,7 @@ aviram's](http://shaniaviram.net/) set at the [2017 night of 1,000
 kates](https://www.facebook.com/1000kates) which took place 
 on aug. 12, 2017 in philadelphia.
 
-[![shani1](https://kitties.neocities.org/2017-08-12-01.jpg)](https://kitties.neocities.org/2017-08-12-01.jpg
-=400x300)
+[![shani1](https://kitties.neocities.org/2017-08-12-01.jpg =400x300)]
 [![shani2]()]()
 [![shani3]()]()
 [![shani4]()]()
