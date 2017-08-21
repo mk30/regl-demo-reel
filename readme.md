@@ -1,7 +1,8 @@
-the below demo reel acted as the backing visual for [shani
+the below demo reel provided the visuals for [shani
 aviram's](http://shaniaviram.net/) set at the [2017 night of 1,000
 kates](https://www.facebook.com/1000kates) which took place 
-on aug. 12, 2017 in philadelphia.
+on aug. 12, 2017 in philadelphia. shani played music and also interacted with
+the demos live.
 
 ![shani](https://kitties.neocities.org/2017-08-12-01-sm.jpg)
 
