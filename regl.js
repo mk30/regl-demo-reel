@@ -1,4 +1,9 @@
-var regl = require('regl/regl.js')()
+var regl = require('regl/regl.js')({
+  extensions: [
+    'oes_standard_derivatives', 'oes_element_index_uint',
+    'oes_texture_float'
+  ]
+})
 var stack = [], num = 0
 
 window.addEventListener('keydown', function (ev) {

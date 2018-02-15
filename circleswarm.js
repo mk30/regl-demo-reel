@@ -6,9 +6,9 @@ const normals = require('angle-normals')
 const icosphere = require('icosphere')
 const rmat = []
 const camera = require('./libraries/camera.js')(regl, {
-  center: [0, 0, 0],
+  center: [0, 1, 0],
   distance: 10,
-  theta: 1
+  theta: 0 
 })
 function ball (regl){
   var model = [], vtmp = []
@@ -37,10 +37,10 @@ function ball (regl){
       varying vec3 vnormal, vpos;
       varying float vtime;
       void main () {
-        vpos = vec3(position.x+3.0*sin(t), 
-          position.y,
+        vpos = vec3(abs(sin(position.x)+sin(t)), 
+          position.y+3.0*sin(t),
           abs(sin(position.z)*4.0*sin(t)));
-        gl_Position = projection * view * model * vec4(vpos, 1.0);
+        gl_Position = projection * view * model * vec4(vpos.xzy, 1.0);
       }`,
     attributes: {
       position: mesh.positions,
@@ -55,8 +55,9 @@ function ball (regl){
         var theta = context.time
         mat4.translate(rmat, 
           mat4.identity(rmat),
-          [0,0,Math.sin(props.foo)*4])
-        return mat4.rotateZ(rmat, rmat, props.foo)
+          [0,0, Math.sin(props.foo)])
+        mat4.rotateY(rmat, rmat, props.foo)
+        return rmat
       }
     },
     primitive: "triangles"

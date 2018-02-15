@@ -21,6 +21,7 @@
     "gl-vec3": "^1.0.3",
     "glsl-atmosphere": "^2.0.0",
     "glsl-curl-noise": "0.0.4",
+    "glsl-matrix-texture": "^1.0.3",
     "glsl-noise": "0.0.0",
     "glslify": "^6.0.1",
     "icosphere": "^1.0.0",
