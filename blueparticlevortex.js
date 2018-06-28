@@ -27,7 +27,7 @@ const drawdis = regl({
     uniform float t;
     void main () {
       //gl_FragColor = vec4(abs(vnorm), 0.4);
-      gl_FragColor = vec4(- abs(vnorm) + 
+      gl_FragColor = vec4(abs(vnorm) - 
       vec3(2.0*snoise(vnorm + sin(t))), 1.0);
     }`,
   vert: glsl`
@@ -39,8 +39,8 @@ const drawdis = regl({
     uniform float t;
     vec3 warp (vec3 p){
       float r = length(p.x*sin(t));
-      float theta = atan(p.z, p.x);
-      return vec3 (r*cos(r), 2.0+sin(theta-r), sin(r)*sin(theta+t));
+      float theta = atan(p.y*20.0, p.y*p.x + 10.0*sin(t));
+      return vec3 ((1.0-r)*cos(r*20.0), 2.0+sin(theta-r), sin(r)*sin(theta+t));
     }
     void main () {
       vnorm = normal;
@@ -53,7 +53,7 @@ const drawdis = regl({
       float dz =
       snoise(position+cos(t))*h;
       vpos = position;
-      dvpos = position + vec3(dx,0,dz);
+      dvpos = position + vec3(dx,dz,dz) - vec3(sin(t), cos(t), sin(t));
       gl_Position = projection * view * model * vec4(warp(dvpos),1);
       gl_PointSize = (10.0*(1.0+3.0*sin(t*20.0+length(position))))/gl_Position.w;
 
@@ -70,7 +70,7 @@ const drawdis = regl({
     model: function(context, props){
       var theta = context.time
       mat4.rotateX(rmat, mat4.identity(rmat), props.foo)
-      mat4.rotateZ(rmat, rmat, theta*props.foo*0.5)
+      mat4.rotateY(rmat, rmat, theta*props.foo*0.5)
       return rmat
     }
   },
@@ -87,7 +87,7 @@ regl.frame((context) => {
   })
   drawfeedback({texture: feedBackTexture})
   var batch = []
-  for (var i=0; i<10; i++){
+  for (var i=0; i<6; i++){
     batch.push({foo: (i/10)*(2*Math.PI), offset:
     Math.sin(Math.PI+i/10)})
   }

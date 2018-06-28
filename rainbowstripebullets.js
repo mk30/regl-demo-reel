@@ -24,8 +24,9 @@ function ball (regl){
       }
       void main () {
         vec3 c = abs(vnormal) * 0.1
-          + vec3(10.0*sin(vtime - vpos.z/10.0 +
-          vpos.y/200.0),1,1) * 0.45;
+          + vec3(5.0*cos(vtime * vpos.z/10.0 
+          + sin(vpos.z-vpos.x)*3.0
+          + vpos.y/200.0),1,1) * 0.45;
         c.y = 1.0;
         gl_FragColor = vec4(hsl2rgb(c), 1.0);
       }`,
@@ -38,8 +39,8 @@ function ball (regl){
       varying float vtime;
       void main () {
         vpos = vec3(abs(sin(position.x)+sin(t)), 
-          position.y+3.0*sin(t),
-          abs(sin(position.z)*4.0*sin(t)));
+          position.y+3.0*sin(t)+position.x*cos(t+position.y),
+          abs(sin(position.z)*4.0*sin(t-position.x)));
         gl_Position = projection * view * model * vec4(vpos.xzy, 1.0);
       }`,
     attributes: {
@@ -49,7 +50,7 @@ function ball (regl){
     elements: mesh.cells,
     uniforms: {
       t: function(context, props){
-        return context.time * props.offset *2.0
+        return context.time * props.offset *5.0
       },
       model: function(context, props){
         var theta = context.time
@@ -57,6 +58,7 @@ function ball (regl){
           mat4.identity(rmat),
           [0,0, Math.sin(props.foo)])
         mat4.rotateY(rmat, rmat, props.foo)
+        mat4.rotateX(rmat, rmat, props.foo/2.0)
         return rmat
       }
     },

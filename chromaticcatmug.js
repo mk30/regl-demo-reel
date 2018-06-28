@@ -16,9 +16,9 @@ function makecatmug (regl) {
       #pragma glslify: snoise = require('glsl-noise/simplex/3d')
       #pragma glslify: cnoise = require('glsl-curl-noise')
       uniform float time;
-      varying vec3 vnorm;
+      varying vec3 vnorm, vpos;
       void main () {
-        gl_FragColor = vec4(cnoise(vnorm*sin(time)),1.0);
+        gl_FragColor = vec4(cnoise(3.0+vpos+0.5*vnorm.x*sin(time)+vpos.x) + cos(time)*0.5,1.0);
       }
     `,
     vert: glsl`
@@ -33,15 +33,16 @@ function makecatmug (regl) {
         //set ripplespeed low for faster ripples.
         float dxripplespeed = sin(time)*15.0;
         float dzripplespeed = cos(time/5.0)*5.0;
-        float dx = snoise(position+2.0*
+        float dx = snoise(position*2.0+2.0*
           pow(abs(sin(time/dxripplespeed)), 8.4))*0.1;
-        float dz = snoise(position+
+        float dz = snoise(position-
           pow(abs(cos(time/dzripplespeed)), 6.4))*0.1;
         vpos = position;
         dvpos = position +
           (vec3(dx,0,dz)
+          + vnorm.x*0.3
           + vec3(0,position.y/12.0-0.03*sin(time*2.0),position.z/12.0
-          + 0.03*sin(time)));
+          + 0.03*cos(time)));
         gl_Position = projection * view * model *
         vec4(dvpos,1);
       }

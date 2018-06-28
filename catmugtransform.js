@@ -15,12 +15,15 @@ function skeldraw (regl){
     frag: `
       precision mediump float;
       varying vec3 vnormal;
+      uniform float t;
       vec3 hsl2rgb(in vec3 hsl) {
         vec3 rgb = clamp(abs(mod(hsl.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0,0.0,1.0);
         return hsl.z+hsl.y*(rgb-0.5)*(1.0-abs(2.0*hsl.z-1.0));
       }
       void main () {
-        gl_FragColor = vec4(hsl2rgb(abs(vnormal)*1.75), 1.0);
+        gl_FragColor =
+        vec4(hsl2rgb(abs(vec3(vnormal.x*0.5,1.0-vnormal.y*sin(1.0-t),vnormal.z))
+          *1.75-0.5*sin(t)), 1.0);
       }`,
     vert: `
       precision mediump float;
@@ -32,16 +35,16 @@ function skeldraw (regl){
         float r = length(p.zx);
         float theta = atan(p.z, p.y);
         //return vec3 (r, r, sin(theta)) + 2.0*vnormal+cos(40.0*t+p.y);
-        return vec3 (p.x, p.y, p.z) +
-        sin(12.0*t+vnormal)*vnormal*pow(abs(sin(t)), 3.0);
-//        + sin(pow(t, 1.8))*abs(sin(t));
+        return vec3 (p.x, p.y+p.x, p.z-p.x) +
+        sin(12.0/t-cos(vnormal+sin(t)))*vnormal*pow(abs(sin(t)), 3.0)
+        + sin(pow(t, 0.8))*abs(cos(theta+sin(t)));
       }
       void main () {
         vnormal = normal;
         gl_Position = projection * view * model *
         vec4(warp(position), 1.0);
         gl_PointSize =
-        (64.0*(1.0+sin(t*20.0+length(position))))/gl_Position.w;
+        (64.0*(1.0+sin(t-length(position))))/gl_Position.w;
       }`,
     attributes: {
       position: skelly.positions,
@@ -54,8 +57,8 @@ function skeldraw (regl){
          },
       model: function(context, props){
         var theta = context.time
-        //return mat4.rotateY(rmat, mat4.identity(rmat), theta/2.0)
-        return mat4.identity(rmat)
+        return mat4.rotateX(rmat, mat4.identity(rmat), Math.sin(theta*0.5))
+        //return mat4.identity(rmat)
       }
       
     },
